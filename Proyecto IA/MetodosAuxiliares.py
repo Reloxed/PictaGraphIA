@@ -1,15 +1,14 @@
-import networkx as nx;
-import matplotlib as mpl;
+import networkx as nx
 
 """
-Este método nos devuelve el número de colores mínimo
-para colorear el grafo en cuestión, observando cual
-es el nodo con mayor número de vecinos y sumando
-uno a dicho número.
+Este método nos devuelve el número máximo de colores a utilizar
+en el algoritmo, observando cual es el nodo con mayor número de
+vecinos y sumando uno a dicho número.
 """
-def min_colores(g):
-    v = 0;
+def colores(g):
+    v = 0
     for i in nx.nodes(g):
-        if(v<nx.degree(g, i)):
+        if(v < nx.degree(g, i)):
             v = nx.degree(g, i)
-    return v+1
+    return v + 1
+
