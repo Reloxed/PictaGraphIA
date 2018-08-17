@@ -1,6 +1,8 @@
 import networkx as nx;
 import matplotlib.pyplot as dibuj;
+import random;
 from MetodosAuxiliares import *;
+from AG import *;
 
 g = nx.Graph();
 
@@ -23,4 +25,9 @@ print("---------------------------------------------------------")
 nx.draw(g, with_labels=True);
 print(colores(g))
 
-dibuj.show();
+#dibuj.show();
+
+crea_poblacion()
+print(poblacion_inicial)
+print(genera_sucesor())
+print(enfriamiento_simulado(4, 0.1, 10, 10))
