@@ -25,9 +25,15 @@ print("---------------------------------------------------------")
 nx.draw(g, with_labels=True);
 print(colores(g))
 
+print("---------------------------------------------------------")
+
+
+
 #dibuj.show();
 
-crea_poblacion()
-print(poblacion_inicial)
-print(genera_sucesor())
-print(enfriamiento_simulado(4, 0.1, 10, 10))
+#crea_poblacion()
+#print(crea_individuo(1, colores(g)))
+print(gc_traducido)
+#print(poblacion_inicial)
+#print(genera_sucesor())
+print(enfriamiento_simulado(4, 0.1, 100, 100))
