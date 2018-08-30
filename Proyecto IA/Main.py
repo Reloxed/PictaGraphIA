@@ -6,13 +6,13 @@ from AG import *;
 
 g = nx.Graph();
 
+g.add_edge(0, 1);
 g.add_edge(1, 2);
-g.add_edge(2, 3);
+g.add_edge(0, 2);
 g.add_edge(1, 3);
-g.add_edge(2, 4);
-g.add_edge(1, 4);
-g.add_edge(4, 5);
-g.add_edge(1, 6);
+g.add_edge(0, 3);
+g.add_edge(3, 4);
+g.add_edge(0, 5);
 
 print("---------------------------------------------------------")
 
@@ -27,13 +27,14 @@ print(colores(g))
 
 print("---------------------------------------------------------")
 
+#print(numero_colores_usados(crea_individuo(1, colores(g))))
 
-
-#dibuj.show();
+dibuj.show();
 
 #crea_poblacion()
 #print(crea_individuo(1, colores(g)))
-print(gc_traducido)
+#print(gc_traducido)
 #print(poblacion_inicial)
 #print(genera_sucesor())
-print(enfriamiento_simulado(4, 0.1, 100, 100))
+print(enfriamiento_simulado(100, 0.95, 100, 100))
+#print(otro_fitness(crea_individuo(1, colores(g))))

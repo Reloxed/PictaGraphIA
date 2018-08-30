@@ -5,20 +5,17 @@ from MetodosAuxiliares import *
 
 g = nx.Graph();
 
+g.add_edge(0, 1);
 g.add_edge(1, 2);
-g.add_edge(2, 3);
+g.add_edge(0, 2);
 g.add_edge(1, 3);
-g.add_edge(2, 4);
-g.add_edge(1, 4);
-g.add_edge(4, 5);
-g.add_edge(1, 6);
+g.add_edge(0, 3);
+g.add_edge(3, 4);
+g.add_edge(0, 5);
 
-tam = 100 # Número de individuos por población
+tam = 100000 # Número de individuos por población
 largo = nx.number_of_nodes(g) # Longitud de la lista
-gc_modelo = nx.greedy_color(g) # Coloreado óptimo del grafo
-gc_traducido = [gc_modelo[i] for i in range (1, len(gc_modelo) + 1)]
 presion = 3 # Número de individuos que se seleccionan para la evolución
-posibilidad_mutacion = 0.2 # Probabilidad de que un individuo mute
 
 """
 Crea un individuo
@@ -58,12 +55,31 @@ def fitness_nuevo(individuo):
     if len(coloresusados) > 3:
         fitness += 10000
     return fitness
+
+
+def otro_fitness(individuo):
+    fitness = 0
+    #print(individuo)
+    #print(numero_colores_usados(individuo))
+    for i in range(0, len(individuo)):
+        if numero_colores_usados(individuo) > 3:
+           fitness += 10000
+        #print('Iteración ' + str(i) + ':')
+        vecinos = list(nx.neighbors(g, i))
+        #print('Los vecinos de ' + str(i) + ' son ' + str(vecinos) + '\n')
+        for j in range(len(vecinos)):
+            #print('La posición ' + str(j) + ' de la lista de vecinos de ' + str(i) + ' es ' + str(vecinos[j]) + '\ny se compara con la posición ' + str(i) + ' para comprobar\nque sus colores sean distintos\n')
+            if individuo[i] == individuo[vecinos[j]]:
+                fitness += 10000
+                #print('Como ' + str(i) + ' tiene el mismo color que su nodo vecino ' + str(vecinos[j]) + ', se suma 1000 al fitness, que actualmente es ' + str(fitness) + '\n')
+    #print('Se obtiene un fitness resultante igua a:')
+    return fitness
+
 '''
-1. Se puntúan todos los elementos de la población y nos quedamos con los mejores (se guardan en 'seleccionados').
-2. Se mezclan los elegidos para crear nuevos individuos
+Se puntúan todos los elementos de la población y nos quedamos con los mejores (se guardan en 'seleccionados').
 '''
 def seleccion(poblacion):
-    puntuados = [(fitness_nuevo(i), i) for i in poblacion]
+    puntuados = [(otro_fitness(i), i) for i in poblacion]
     puntuados = [i[1] for i in sorted(puntuados)]
 
     seleccionados = puntuados[(len(puntuados) - presion)]
@@ -84,14 +100,14 @@ def genera_sucesor():
 def enfriamiento_simulado(t_inicial, factor_descenso, n_enfriamientos, n_iteraciones):
     temperatura = t_inicial;
     actual = seleccion(poblacion_inicial);
-    valor_actual = fitness_nuevo(actual);
+    valor_actual = otro_fitness(actual);
     mejor = actual;
     valor_mejor = valor_actual;
 
     for i in range (0, n_enfriamientos):
         for j in range (0, n_iteraciones):
             candidata = genera_sucesor()
-            valor_candidata = fitness_nuevo(candidata)
+            valor_candidata = otro_fitness(candidata)
             incremento = valor_candidata - valor_actual
             if(incremento < 0):
                 actual = candidata
@@ -101,5 +117,5 @@ def enfriamiento_simulado(t_inicial, factor_descenso, n_enfriamientos, n_iteraci
                 valor_mejor = valor_actual
         temperatura -= factor_descenso
 
-    return str(mejor) + ' & ' + str(valor_mejor)
+    return 'Un coloreado optimo del grafo es ' + str(mejor) + ', siendo el color el valor de la lista y los índices de la misma los nodos del grafo & un fitness de ' + str(valor_mejor)
 

@@ -12,3 +12,6 @@ def colores(g):
             v = nx.degree(g, i)
     return v + 1
 
+def numero_colores_usados(individuo):
+    colores = set(individuo)
+    return len(colores)
