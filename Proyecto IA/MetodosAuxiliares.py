@@ -15,3 +15,7 @@ def colores(g):
 def numero_colores_usados(individuo):
     colores = set(individuo)
     return len(colores)
+
+def clique_maximo(g):
+    cliques = list(nx.find_cliques(g))
+    return len(cliques[0])

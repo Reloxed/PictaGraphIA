@@ -1,40 +1,13 @@
-import networkx as nx;
+import warnings
 import matplotlib.pyplot as dibuj;
-import random;
-from MetodosAuxiliares import *;
 from AG import *;
 
-g = nx.Graph();
+warnings.filterwarnings(action='ignore')
 
-g.add_edge(0, 1);
-g.add_edge(1, 2);
-g.add_edge(0, 2);
-g.add_edge(1, 3);
-g.add_edge(0, 3);
-g.add_edge(3, 4);
-g.add_edge(0, 5);
+colores_nodos = enfriamiento_simulado(100, 0.95, 100, 100000)
 
-print("---------------------------------------------------------")
+nx.draw(g, with_labels=True, node_color=colores_nodos)
 
-m = nx.greedy_color(g)
-for i in m:
-    print(m[i])
-
-print("---------------------------------------------------------")
-
-nx.draw(g, with_labels=True);
-print(colores(g))
-
-print("---------------------------------------------------------")
-
-#print(numero_colores_usados(crea_individuo(1, colores(g))))
+print('Para el grafo representado en pantalla, se ha llegado a la conclusión que un coloreado óptimo es el siguiente:\n' + str(colores_nodos) + '\ndonde el valor indica el color en la lista y el índice indica el vértice correspondiene en el grafo, utilizando ' + str(len(set(colores_nodos))) + ' colores')
 
 dibuj.show();
-
-#crea_poblacion()
-#print(crea_individuo(1, colores(g)))
-#print(gc_traducido)
-#print(poblacion_inicial)
-#print(genera_sucesor())
-print(enfriamiento_simulado(100, 0.95, 100, 100))
-#print(otro_fitness(crea_individuo(1, colores(g))))
